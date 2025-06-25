@@ -227,10 +227,11 @@ class FrogPilotEvents:
     self.startup_seen |= startup_alert_match
 
     if sm["frogpilotCarState"].trafficModeEnabled != self.previous_traffic_mode:
-      if self.previous_traffic_mode:
-        self.events.add(EventName.trafficModeInactive)
-      else:
-        self.events.add(EventName.trafficModeActive)
+      if not params.get_bool("AutoPersonalityProfile") :
+        if self.previous_traffic_mode:
+          self.events.add(EventName.trafficModeInactive)
+        else:
+          self.events.add(EventName.trafficModeActive)
       self.previous_traffic_mode = sm["frogpilotCarState"].trafficModeEnabled
 
     if sm["modelV2"].meta.turnDirection == Desire.turnLeft:
