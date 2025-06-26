@@ -32,7 +32,7 @@ class FrogPilotCard:
     self.pause_longitudinal = False
     self.prev_distance_button = False
     self.traffic_mode_enabled = False
-    self.traffic_mode = False  # Initialize traffic_mode here
+    #self.traffic_mode = False  # Initialize traffic_mode here
 
     self.gap_counter = 0
 
@@ -131,9 +131,9 @@ class FrogPilotCard:
       auto_pers_profile = params.get_bool("AutoPersonalityProfile")
       if auto_pers_profile:
         change_traffic_mode_state = params.get_bool("ChangTrafficModeStat")
-        if self.traffic_mode != change_traffic_mode_state :
-          self.traffic_mode = change_traffic_mode_state
-          frogpilotCarState.trafficMode = self.traffic_mode
+        if self.traffic_mode_enabled!= change_traffic_mode_state :
+          self.traffic_mode_enabled = change_traffic_mode_state
+          frogpilotCarState.traffic_mode_enabled = self.traffic_mode_enabled
     ##############dynamic traffic Mode ####################
 
     
