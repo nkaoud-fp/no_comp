@@ -154,8 +154,8 @@ def is_url_pingable(url, timeout=10):
   return False
 
 def lock_doors(lock_doors_timer, sm):
-  wait_for_no_driver(sm, lock_doors_timer)
-  #wait_for_no_driver_Q(sm, lock_doors_timer)
+  #wait_for_no_driver(sm, lock_doors_timer)
+  wait_for_no_driver_Q(sm, lock_doors_timer)
 
   if not any(ps.ignitionLine or ps.ignitionCan for ps in sm["pandaStates"] if ps.pandaType != log.PandaState.PandaType.unknown):
     for _ in range(3):
