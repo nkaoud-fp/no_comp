@@ -32,6 +32,7 @@ class FrogPilotCard:
     self.pause_longitudinal = False
     self.prev_distance_button = False
     self.traffic_mode_enabled = False
+    self.traffic_mode = False  # Initialize traffic_mode here
 
     self.gap_counter = 0
 
