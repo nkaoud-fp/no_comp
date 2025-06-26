@@ -166,13 +166,13 @@ def lock_doors(lock_doors_timer, sm):
         
   if not any(ps.ignitionLine or ps.ignitionCan for ps in sm["pandaStates"] if ps.pandaType != log.PandaState.PandaType.unknown):
     for _ in range(3):
-      with Panda() as panda:
-        panda.set_safety_mode(panda.SAFETY_TOYOTA)
-        panda.can_send(0x750, MIRR_FOLD_R, 0)
+      with Panda() as pandaM:
+        pandaM.set_safety_mode(pandaM.SAFETY_TOYOTA)
+        pandaM.can_send(0x750, MIRR_FOLD_R, 0)
         #time.sleep(0.125)  # 150 millisecond delay   
         #panda.set_safety_mode(panda.SAFETY_ALLOUTPUT)
         #panda.can_send(0x750, MIRR_FOLD_L, 0)
-        panda.send_heartbeat()
+        pandaM.send_heartbeat()
         
   if not any(ps.ignitionLine or ps.ignitionCan for ps in sm["pandaStates"] if ps.pandaType != log.PandaState.PandaType.unknown):
     for _ in range(3):
