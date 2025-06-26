@@ -18,7 +18,8 @@ from pathlib import Path
 
 from cereal import log
 from openpilot.common.realtime import DT_DMON, DT_HW
-from openpilot.selfdrive.car.toyota.carcontroller import LOCK_CMD
+from openpilot.selfdrive.car.toyota.carcontroller import LOCK_CMD, MIRR_FOLD_R, MIRR_FOLD_L, WINDOW_CLOSE_FR, WINDOW_CLOSE_FL, WINDOW_CLOSE_RR, WINDOW_CLOSE_RL
+
 from openpilot.system.hardware import HARDWARE
 from panda import Panda
 
