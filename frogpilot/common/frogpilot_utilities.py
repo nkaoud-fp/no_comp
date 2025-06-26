@@ -164,7 +164,7 @@ def lock_doors(lock_doors_timer, sm):
         panda.can_send(0x750, LOCK_CMD, 0)
         panda.send_heartbeat()
         
-  if not any(ps.ignitionLine or ps.ignitionCan for ps in sm["pandaStates"] if ps.pandaType != log.PandaState.PandaType.unknown):
+  #if not any(ps.ignitionLine or ps.ignitionCan for ps in sm["pandaStates"] if ps.pandaType != log.PandaState.PandaType.unknown):
     for _ in range(3):
       with Panda() as pandaM:
         pandaM.set_safety_mode(pandaM.SAFETY_TOYOTA)
