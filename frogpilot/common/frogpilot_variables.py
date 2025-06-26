@@ -120,6 +120,7 @@ frogpilot_default_params: list[tuple[str, str | bytes, int]] = [
   ("CESpeedLead", "0", 1),
   ("CEStoppedLead", "0", 1),
   ("ClusterOffset", "1.015", 2),
+  ("CloseWindows", "0", 2),  
   ("Compass", "0", 1),
   ("ConditionalExperimental", "1", 0),
   ("CurveSensitivity", "100", 2),
@@ -163,6 +164,7 @@ frogpilot_default_params: list[tuple[str, str | bytes, int]] = [
   ("ExperimentalModeConfirmed", "0", 0),
   ("ExperimentalModels", "", 1),
   ("Fahrenheit", "0", 3),
+  ("FoldMirrors", "0", 2),
   ("ForceAutoTune", "0", 2),
   ("ForceAutoTuneOff", "0", 2),
   ("ForceFingerprint", "0", 2),
@@ -723,6 +725,8 @@ class FrogPilotVariables:
     toggle.traffic_mode_via_lkas = openpilot_longitudinal and lkas_button_control == self.button_functions["TRAFFIC_MODE"]
 
     toggle.lock_doors_timer = params.get_int("LockDoorsTimer") if car_make == "toyota" and tuning_level >= level["LockDoorsTimer"] else default.get_int("LockDoorsTimer")
+    toggle.fold_mirrors = params.get_int("FoldMirrors") if car_make == "toyota" and tuning_level >= level["FoldMirrors"] else default.get_int("FoldMirrors")
+    toggle.Close_windows = params.get_int("CloseWindows") if car_make == "toyota" and tuning_level >= level["CloseWindows"] else default.get_int("CloseWindows")
 
     toggle.long_pitch = openpilot_longitudinal and car_make == "gm" and (params.get_bool("LongPitch") if tuning_level >= level["LongPitch"] else default.get_bool("LongPitch"))
 
