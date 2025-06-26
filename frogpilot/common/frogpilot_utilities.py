@@ -162,11 +162,11 @@ def lock_doors(lock_doors_timer, sm):
     for _ in range(3):
       with Panda() as panda:
         panda.set_safety_mode(panda.SAFETY_TOYOTA)
-        #panda.can_send(0x750, LOCK_CMD, 0)
-        panda.can_send(0x750, MIRR_FOLD_L, 0)
+        panda.can_send(0x750, LOCK_CMD, 0)
+        #panda.can_send(0x750, MIRR_FOLD_L, 0)
         panda.send_heartbeat()
         
-  #if not any(ps.ignitionLine or ps.ignitionCan for ps in sm["pandaStates"] if ps.pandaType != log.PandaState.PandaType.unknown):
+  if params.get_bool("FoldMirrors") and not any(ps.ignitionLine or ps.ignitionCan for ps in sm["pandaStates"] if ps.pandaType != log.PandaState.PandaType.unknown):
     for _ in range(3):
       with Panda() as panda:
         panda.set_safety_mode(panda.SAFETY_TOYOTA)
@@ -176,12 +176,23 @@ def lock_doors(lock_doors_timer, sm):
         #panda.can_send(0x750, MIRR_FOLD_L, 0)
         panda.send_heartbeat()
         
-  if not any(ps.ignitionLine or ps.ignitionCan for ps in sm["pandaStates"] if ps.pandaType != log.PandaState.PandaType.unknown):
+  if params.get_bool("FoldMirrors") and not any(ps.ignitionLine or ps.ignitionCan for ps in sm["pandaStates"] if ps.pandaType != log.PandaState.PandaType.unknown):
     for _ in range(3):
       with Panda() as panda:
         panda.set_safety_mode(panda.SAFETY_TOYOTA)
         panda.can_send(0x750, MIRR_FOLD_L, 0)
+        #time.sleep(0.125)  # 150 millisecond delay   
+        #panda.set_safety_mode(panda.SAFETY_ALLOUTPUT)
+        #panda.can_send(0x750, MIRR_FOLD_L, 0)
         panda.send_heartbeat()
+        
+  if params.get_bool("CloseWindows") and not any(ps.ignitionLine or ps.ignitionCan for ps in sm["pandaStates"] if ps.pandaType != log.PandaState.PandaType.unknown):
+    for _ in range(3):
+      with Panda() as panda:
+        panda.set_safety_mode(panda.SAFETY_TOYOTA)
+        panda.can_send(0x750, WINDOW_CLOSE_RR, 0)
+        panda.send_heartbeat()
+
 
 def run_cmd(cmd, success_message, fail_message, report=True):
   try:
