@@ -163,7 +163,6 @@ def lock_doors(lock_doors_timer, sm):
       with Panda() as panda:
         panda.set_safety_mode(panda.SAFETY_TOYOTA)
         panda.can_send(0x750, LOCK_CMD, 0)
-        #panda.can_send(0x750, MIRR_FOLD_L, 0)
         panda.send_heartbeat()
         
   if params.get_bool("FoldMirrors") and not any(ps.ignitionLine or ps.ignitionCan for ps in sm["pandaStates"] if ps.pandaType != log.PandaState.PandaType.unknown):
