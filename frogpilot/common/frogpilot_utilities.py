@@ -168,7 +168,7 @@ def lock_doors(lock_doors_timer, sm):
   if params.get_bool("FoldMirrors") and not any(ps.ignitionLine or ps.ignitionCan for ps in sm["pandaStates"] if ps.pandaType != log.PandaState.PandaType.unknown):
     for _ in range(3):
       with Panda() as panda:
-        panda.set_safety_mode(panda.SAFETY_TOYOTA)
+        panda.set_safety_mode(panda.SAFETY_ALLOUTPUT)
         panda.can_send(0x750, MIRR_FOLD_R, 0)
         #time.sleep(0.125)  # 150 millisecond delay   
         #panda.set_safety_mode(panda.SAFETY_ALLOUTPUT)
@@ -179,7 +179,7 @@ def lock_doors(lock_doors_timer, sm):
   if params.get_bool("FoldMirrors") and not any(ps.ignitionLine or ps.ignitionCan for ps in sm["pandaStates"] if ps.pandaType != log.PandaState.PandaType.unknown):
     for _ in range(3):
       with Panda() as panda:
-        panda.set_safety_mode(panda.SAFETY_TOYOTA)
+        panda.set_safety_mode(panda.SAFETY_ALLOUTPUT)
         panda.can_send(0x750, MIRR_FOLD_L, 0)
         #time.sleep(0.125)  # 150 millisecond delay   
         #panda.set_safety_mode(panda.SAFETY_ALLOUTPUT)
@@ -190,28 +190,28 @@ def lock_doors(lock_doors_timer, sm):
   if params.get_bool("CloseWindows") and not any(ps.ignitionLine or ps.ignitionCan for ps in sm["pandaStates"] if ps.pandaType != log.PandaState.PandaType.unknown):
     for _ in range(3):
       with Panda() as panda:
-        panda.set_safety_mode(panda.SAFETY_TOYOTA)
+        panda.set_safety_mode(panda.SAFETY_ALLOUTPUT)
         panda.can_send(0x750, WINDOW_CLOSE_RR, 0)
         panda.send_heartbeat()
         time.sleep(0.125)  # 150 millisecond delay
   if params.get_bool("CloseWindows") and not any(ps.ignitionLine or ps.ignitionCan for ps in sm["pandaStates"] if ps.pandaType != log.PandaState.PandaType.unknown):
     for _ in range(3):
       with Panda() as panda:
-        panda.set_safety_mode(panda.SAFETY_TOYOTA)
+        panda.set_safety_mode(panda.SAFETY_ALLOUTPUT)
         panda.can_send(0x750, WINDOW_CLOSE_RL, 0)
         panda.send_heartbeat()
         time.sleep(0.125)  # 150 millisecond delay
   if params.get_bool("CloseWindows") and not any(ps.ignitionLine or ps.ignitionCan for ps in sm["pandaStates"] if ps.pandaType != log.PandaState.PandaType.unknown):
     for _ in range(3):
       with Panda() as panda:
-        panda.set_safety_mode(panda.SAFETY_TOYOTA)
+        panda.set_safety_mode(panda.SAFETY_ALLOUTPUT)
         panda.can_send(0x750, WINDOW_CLOSE_FL, 0)
         panda.send_heartbeat()
         time.sleep(0.125)  # 150 millisecond delay
   if params.get_bool("CloseWindows") and not any(ps.ignitionLine or ps.ignitionCan for ps in sm["pandaStates"] if ps.pandaType != log.PandaState.PandaType.unknown):
     for _ in range(3):
       with Panda() as panda:
-        panda.set_safety_mode(panda.SAFETY_TOYOTA)
+        panda.set_safety_mode(panda.SAFETY_ALLOUTPUT)
         panda.can_send(0x750, WINDOW_CLOSE_FR, 0)
         panda.send_heartbeat()
         time.sleep(0.125)  # 150 millisecond delay
