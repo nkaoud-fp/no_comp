@@ -555,6 +555,14 @@ void AnnotatedCameraWidget::paintEvent(QPaintEvent *event) {
       CameraWidget::updateCalibration(DEFAULT_CALIBRATION);
     }
     painter.beginNativePainting();
+
+    // ** START MODIFICATION FOR HEADLESS MODE **
+    // Add this condition to black out the camera stream if headless mode is enabled
+    if (frogpilot_toggles.value("headless_mode").toBool()) { // Assuming "headless_mode" is a boolean toggle
+      painter.fillRect(this->rect(), Qt::black);
+    }
+    // ** END MODIFICATION FOR HEADLESS MODE **
+    
     CameraWidget::setFrameId(model.getFrameId());
     CameraWidget::paintGL();
     painter.endNativePainting();
