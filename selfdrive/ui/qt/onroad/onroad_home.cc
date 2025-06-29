@@ -9,12 +9,10 @@
 #endif
 
 #include "selfdrive/ui/qt/util.h"
-#include "selfdrive/ui/ui.h"  
 
 OnroadWindow::OnroadWindow(QWidget *parent) : QWidget(parent) {
-//QVBoxLayout *main_layout  = new QVBoxLayout(this);
-  main_layout = new QVBoxLayout(this);
-  main_layout->setMargin(UI_BORDER_SIZE); 
+  QVBoxLayout *main_layout  = new QVBoxLayout(this);
+  main_layout->setMargin(UI_BORDER_SIZE);
   QStackedLayout *stacked_layout = new QStackedLayout;
   stacked_layout->setStackingMode(QStackedLayout::StackAll);
   main_layout->addLayout(stacked_layout);
@@ -82,19 +80,6 @@ void OnroadWindow::updateState(const UIState &s, const FrogPilotUIState &fs) {
     bg = bgColor;
     update();
   }
-
-  // --- BEGIN NEW/MODIFIED LOGIC FOR headless_mode ---
-  // Check if the headless_mode state has changed and Expand the TOP boarder
-  if (s.scene.headless_mode != prev_headless_mode_state) { // prev_headless_mode_state needs to be a new member variable
-    if (s.scene.headless_mode) {
-      main_layout->setContentsMargins(UI_BORDER_SIZE/2, (UI_BORDER_SIZE * 25) + (UI_BORDER_SIZE/2), UI_BORDER_SIZE/2, UI_BORDER_SIZE/2); // devide by 2 to get thin boarder
-    } else {
-      main_layout->setMargin(UI_BORDER_SIZE);
-    }
-    prev_headless_mode_state = s.scene.headless_mode; // Update the stored state
-    shouldUpdate = true; // Request a repaint because margins changed
-  }
-  // --- END NEW/MODIFIED LOGIC FOR headless_mode ---
 
   // FrogPilot variables
   frogpilot_onroad->bg = bg;
@@ -191,14 +176,4 @@ void OnroadWindow::primeChanged(bool prime) {
 void OnroadWindow::paintEvent(QPaintEvent *event) {
   QPainter p(this);
   p.fillRect(rect(), QColor(bg.red(), bg.green(), bg.blue(), 255));
-
-  // Access headless_mode state at construction time
-  //UIState *currentState = uiState(); // Get the UIState instance
-  if (s->scene.headless_mode) {
-    // Draw the top black rectangle to make the top area over the boarder black, covering anything that might be there.
-    QRect screenRect = this->rect();
-    p.fillRect(QRect(0, 0, screenRect.width(), UI_BORDER_SIZE * 25), Qt::black);
-  }
-
-
 }

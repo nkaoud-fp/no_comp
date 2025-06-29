@@ -37,7 +37,6 @@ private:
   float speedLimit;
   bool is_cruise_set = false;
   bool is_metric = false;
-  bool headLessMode;
   bool dmActive = false;
   bool hideBottomIcons = false;
   bool rightHandDM = false;
