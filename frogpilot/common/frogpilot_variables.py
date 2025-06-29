@@ -181,6 +181,7 @@ frogpilot_default_params: list[tuple[str, str | bytes, int]] = [
   ("GreenLightAlert", "0", 0),
   ("GsmApn", "", 0),
   ("GsmRoaming", "1", 0),
+  ("HeadlessMode", "0", 2),
   ("HideAlerts", "0", 2),
   ("HideLeadMarker", "0", 2),
   ("HideMapIcon", "0", 2),
@@ -826,6 +827,8 @@ class FrogPilotVariables:
     toggle.driver_camera_in_reverse = quality_of_life_visuals and (params.get_bool("DriverCamera") if tuning_level >= level["DriverCamera"] else default.get_bool("DriverCamera"))
     toggle.onroad_distance_button = openpilot_longitudinal and (quality_of_life_visuals and (params.get_bool("OnroadDistanceButton") if tuning_level >= level["OnroadDistanceButton"] else default.get_bool("OnroadDistanceButton")) or toggle.debug_mode)
     toggle.standby_mode = quality_of_life_visuals and (params.get_bool("StandbyMode") if tuning_level >= level["StandbyMode"] else default.get_bool("StandbyMode"))
+    toggle.headless_mode = quality_of_life_visuals and (params.get_bool("HeadlessMode") if tuning_level >= level["HeadlessMode"] else default.get_bool("HeadlessMode"))
+
     toggle.stopped_timer = quality_of_life_visuals and (params.get_bool("StoppedTimer") if tuning_level >= level["StoppedTimer"] else default.get_bool("StoppedTimer"))
 
     toggle.rainbow_path = params.get_bool("RainbowPath") if tuning_level >= level["RainbowPath"] else default.get_bool("RainbowPath")
