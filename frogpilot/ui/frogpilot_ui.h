@@ -27,6 +27,8 @@ struct FrogPilotUIScene {
   bool traffic_mode_enabled;
   bool use_stock_colors;
   bool wake_up_screen;
+  bool headless_mode;
+
 
   float lane_width_left;
   float lane_width_right;
