@@ -152,7 +152,16 @@ void AnnotatedCameraWidget::drawHud(QPainter &p, const cereal::FrogPilotPlan::Re
   int top_radius = 32;
   int bottom_radius = has_eu_speed_limit ? 100 : 32;
 
-  QRect set_speed_rect(QPoint(60 + (default_size.width() - set_speed_size.width()) / 2, 45), set_speed_size);
+  // Shift for headless mode
+  const int common_y_headless = 45; // Common top Y for elements in headless
+
+  if (frogpilot_toggles.value("headless_mode").toBool()) {
+    //QRect set_speed_rect(QPoint(60 + (default_size.width() - set_speed_size.width()) / 2, 45), set_speed_size);
+    QRect set_speed_rect(QPoint((width() - set_speed_size.width()) * 0.75, 45), set_speed_size);
+
+  } else {
+    QRect set_speed_rect(QPoint(60 + (default_size.width() - set_speed_size.width()) / 2, 45), set_speed_size);
+  }
   if (!frogpilot_toggles.value("hide_max_speed").toBool()) {
     if (fs.frogpilot_scene.traffic_mode_enabled) {
       p.setPen(QPen(redColor(), 10));
