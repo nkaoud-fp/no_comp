@@ -154,14 +154,18 @@ void AnnotatedCameraWidget::drawHud(QPainter &p, const cereal::FrogPilotPlan::Re
 
   // Shift MAX speed for headless mode
 
+  int screen_recorder_x_pos = screen_recorder->x();
+  int center_x_pos = rect().center().x();
+  int desired_x = 0; //(center_x_pos + screen_recorder_x_pos) / 2 - (set_speed_size.width() / 2); // Roughly center it
+
   if (frogpilot_toggles.value("headless_mode").toBool()) {
-    int screen_recorder_x_pos = screen_recorder->x();
-    int center_x_pos = rect().center().x();
-    int desired_x = (center_x_pos + screen_recorder_x_pos) / 2 - (set_speed_size.width() / 2); // Roughly center it
-    QRect set_speed_rect(QPoint(desired_x + (default_size.width() - set_speed_size.width()) / 2, 45), set_speed_size);
+    desired_x = (center_x_pos + screen_recorder_x_pos) / 2 - (set_speed_size.width() / 2); // Roughly center it
   } else {
-    QRect set_speed_rect(QPoint(60 + (default_size.width() - set_speed_size.width()) / 2, 45), set_speed_size);
+    desired_x  = 60 ;
   }
+  
+  QRect set_speed_rect(QPoint(desired_x + (default_size.width() - set_speed_size.width()) / 2, 45), set_speed_size);
+
   if (!frogpilot_toggles.value("hide_max_speed").toBool()) {
     if (fs.frogpilot_scene.traffic_mode_enabled) {
       p.setPen(QPen(redColor(), 10));
