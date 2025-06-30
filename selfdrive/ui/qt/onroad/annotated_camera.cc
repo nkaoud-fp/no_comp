@@ -571,7 +571,7 @@ void AnnotatedCameraWidget::paintEvent(QPaintEvent *event) {
   painter.setRenderHints(QPainter::Antialiasing | QPainter::TextAntialiasing);
   painter.setPen(Qt::NoPen);
 
-  if (s->scene.world_objects_visible) {
+  if (s->scene.world_objects_visible && !frogpilot_toggles.value("headless_mode").toBool()) {
     update_model(s, fs, model, sm["uiPlan"].getUiPlan(), frogpilot_toggles);
     drawLaneLines(painter, s, fs);
 
