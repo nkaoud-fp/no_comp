@@ -514,7 +514,8 @@ void AnnotatedCameraWidget::paintEvent(QPaintEvent *event) {
   const cereal::FrogPilotPlan::Reader &frogpilotPlan = fpsm["frogpilotPlan"].getFrogpilotPlan();
 
 // Blackout screen in headless Mode
-  if (frogpilot_toggles.value("Headless_Mode").toBool()) {
+  if (frogpilot_toggles.value("Headless_Mode").toBool() || 1==1 ) {
+      //frogpilot_toggles.value("hide_max_speed").toBool()
     painter.beginNativePainting();
     painter.fillRect(this->rect(), Qt::black);
     painter.endNativePainting();
