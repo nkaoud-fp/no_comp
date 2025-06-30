@@ -82,19 +82,19 @@ void OnroadWindow::updateState(const UIState &s, const FrogPilotUIState &fs) {
   }
 
 
- //if (frogpilot_toggles.value("headless_mode").toBool()) 
+ //if (fs.frogpilot_toggles.value("headless_mode").toBool()) 
 
 
 
   // --- BEGIN NEW/MODIFIED LOGIC FOR headless_mode ---
   // Check if the headless_mode state has changed and Expand the TOP boarder
-  if (frogpilot_toggles.value("headless_mode").toBool() != prev_headless_mode_state) { // prev_headless_mode_state needs to be a new member variable
-    if (frogpilot_toggles.value("headless_mode").toBool()) {
+  if (fs.frogpilot_toggles.value("headless_mode").toBool() != prev_headless_mode_state) { // prev_headless_mode_state needs to be a new member variable
+    if (fs.frogpilot_toggles.value("headless_mode").toBool()) {
       main_layout->setContentsMargins(UI_BORDER_SIZE/2, (UI_BORDER_SIZE * 25) + (UI_BORDER_SIZE/2), UI_BORDER_SIZE/2, UI_BORDER_SIZE/2); // devide by 2 to get thin boarder
     } else {
       main_layout->setMargin(UI_BORDER_SIZE);
     }
-    prev_headless_mode_state = frogpilot_toggles.value("headless_mode").toBool() ; // Update the stored state
+    prev_headless_mode_state = fs.frogpilot_toggles.value("headless_mode").toBool() ; // Update the stored state
     //shouldUpdate = true; // Request a repaint because margins changed
     update(); // Request a repaint because margins changed
   }
@@ -198,7 +198,7 @@ void OnroadWindow::paintEvent(QPaintEvent *event) {
   p.fillRect(rect(), QColor(bg.red(), bg.green(), bg.blue(), 255));
 
   // Draw the top black rectangle in headless to make the top area over the boarder black, covering anything that might be there.
-  if (frogpilot_toggles.value("headless_mode").toBool()) {
+  if (fs.frogpilot_toggles.value("headless_mode").toBool()) {
     // Draw the top black rectangle to make the top area over the boarder black, covering anything that might be there.
     QRect screenRect = this->rect();
     p.fillRect(QRect(0, 0, screenRect.width(), UI_BORDER_SIZE * 25), Qt::black);
