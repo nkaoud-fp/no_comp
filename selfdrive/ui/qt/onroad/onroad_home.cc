@@ -88,17 +88,16 @@ void OnroadWindow::updateState(const UIState &s, const FrogPilotUIState &fs) {
 
   // --- BEGIN NEW/MODIFIED LOGIC FOR headless_mode ---
   // Check if the headless_mode state has changed and Expand the TOP boarder
-  if (frogpilot_toggles.value("headless_mode").toBool()) {
-  //if (s.scene.headless_mode != prev_headless_mode_state) { // prev_headless_mode_state needs to be a new member variable
-    //if (s.scene.headless_mode) {
+  if (frogpilot_toggles.value("headless_mode").toBool() != prev_headless_mode_state) { // prev_headless_mode_state needs to be a new member variable
+    if (frogpilot_toggles.value("headless_mode").toBool()) {
       main_layout->setContentsMargins(UI_BORDER_SIZE/2, (UI_BORDER_SIZE * 25) + (UI_BORDER_SIZE/2), UI_BORDER_SIZE/2, UI_BORDER_SIZE/2); // devide by 2 to get thin boarder
-  } else {
+    } else {
       main_layout->setMargin(UI_BORDER_SIZE);
-  }
-    //prev_headless_mode_state = s.scene.headless_mode; // Update the stored state
+    }
+    prev_headless_mode_state = frogpilot_toggles.value("headless_mode").toBool() ; // Update the stored state
     //shouldUpdate = true; // Request a repaint because margins changed
     update(); // Request a repaint because margins changed
-  //}
+  }
   // --- END NEW/MODIFIED LOGIC FOR headless_mode ---
 
   
