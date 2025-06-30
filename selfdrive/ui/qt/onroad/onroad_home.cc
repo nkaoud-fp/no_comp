@@ -196,8 +196,12 @@ void OnroadWindow::paintEvent(QPaintEvent *event) {
   QPainter p(this);
   p.fillRect(rect(), QColor(bg.red(), bg.green(), bg.blue(), 255));
 
+  // Add these two lines to get fs and frogpilot_toggles
+  FrogPilotUIState &fs = *frogpilotUIState();
+  QJsonObject &frogpilot_toggles = fs.frogpilot_toggles;
+
   // Draw the top black rectangle in headless mode to make the top area over the boarder black, covering anything that might be there.
-  if (fs.frogpilot_toggles.value("headless_mode").toBool()) {
+  if (frogpilot_toggles.value("headless_mode").toBool()) {
     // Draw the top black rectangle to make the top area over the boarder black, covering anything that might be there.
     QRect screenRect = this->rect();
     p.fillRect(QRect(0, 0, screenRect.width(), UI_BORDER_SIZE * 25), Qt::black);
