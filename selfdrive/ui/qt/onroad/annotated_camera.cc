@@ -152,17 +152,13 @@ void AnnotatedCameraWidget::drawHud(QPainter &p, const cereal::FrogPilotPlan::Re
   int top_radius = 32;
   int bottom_radius = has_eu_speed_limit ? 100 : 32;
 
-  // Shift for headless mode
-  const int common_y_headless = 45; // Common top Y for elements in headless
+  // Shift MAX speed for headless mode
 
   if (frogpilot_toggles.value("headless_mode").toBool()) {
     int screen_recorder_x_pos = screen_recorder->x();
     int center_x_pos = rect().center().x();
     int desired_x = (center_x_pos + screen_recorder_x_pos) / 2 - (set_speed_size.width() / 2); // Roughly center it
-  
-    // Adjust `set_speed_rect` to the new calculated x position
     QRect set_speed_rect(QPoint(desired_x + (default_size.width() - set_speed_size.width()) / 2, 45), set_speed_size);
-    //QRect set_speed_rect(QPoint(60 + (default_size.width() - set_speed_size.width()) / 2, 45), set_speed_size);
   } else {
     QRect set_speed_rect(QPoint(60 + (default_size.width() - set_speed_size.width()) / 2, 45), set_speed_size);
   }
