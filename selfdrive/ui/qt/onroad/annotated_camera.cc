@@ -558,7 +558,7 @@ void AnnotatedCameraWidget::paintEvent(QPaintEvent *event) {
 
     // ** START MODIFICATION FOR HEADLESS MODE **
     // Add this condition to black out the camera stream if headless mode is enabled
-    if (frogpilot_toggles.value("headless_mode").toBool()) { // Assuming "headless_mode" is a boolean toggle
+    if (frogpilot_toggles.value("Headless_Mode").toBool() || 1 == 1 ) { // Assuming "headless_mode" is a boolean toggle
       painter.fillRect(this->rect(), Qt::black);
     }
     // ** END MODIFICATION FOR HEADLESS MODE **
