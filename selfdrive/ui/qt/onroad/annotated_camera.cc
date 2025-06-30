@@ -513,59 +513,66 @@ void AnnotatedCameraWidget::paintEvent(QPaintEvent *event) {
   const cereal::ModelDataV2::Reader &model = sm["modelV2"].getModelV2();
   const cereal::FrogPilotPlan::Reader &frogpilotPlan = fpsm["frogpilotPlan"].getFrogpilotPlan();
 
-  // draw camera frame
-  {
-    std::lock_guard lk(frame_lock);
-
-    if (frames.empty()) {
-      if (skip_frame_count > 0) {
-        skip_frame_count--;
-        qDebug() << "skipping frame, not ready";
-        return;
-      }
-    } else {
-      // skip drawing up to this many frames if we're
-      // missing camera frames. this smooths out the
-      // transitions from the narrow and wide cameras
-      skip_frame_count = 5;
-    }
-
-    // Wide or narrow cam dependent on speed
-    bool has_wide_cam = available_streams.count(VISION_STREAM_WIDE_ROAD);
-    if (has_wide_cam && frogpilot_toggles.value("camera_view").toInt() == 0) {
-      float v_ego = sm["carState"].getCarState().getVEgo();
-      if ((v_ego < 10) || available_streams.size() == 1) {
-        wide_cam_requested = true;
-      } else if (v_ego > 15) {
-        wide_cam_requested = false;
-      }
-      wide_cam_requested = wide_cam_requested && sm["controlsState"].getControlsState().getExperimentalMode();
-      // for replay of old routes, never go to widecam
-      wide_cam_requested = wide_cam_requested && s->scene.calibration_wide_valid;
-    }
-    CameraWidget::setStreamType(frogpilot_toggles.value("camera_view").toInt() == 1 ? VISION_STREAM_DRIVER :
-                                frogpilot_toggles.value("camera_view").toInt() == 3 || wide_cam_requested ? VISION_STREAM_WIDE_ROAD :
-                                VISION_STREAM_ROAD);
-
-    s->scene.wide_cam = CameraWidget::getStreamType() == VISION_STREAM_WIDE_ROAD;
-    if (s->scene.calibration_valid) {
-      auto calib = s->scene.wide_cam ? s->scene.view_from_wide_calib : s->scene.view_from_calib;
-      CameraWidget::updateCalibration(calib);
-    } else {
-      CameraWidget::updateCalibration(DEFAULT_CALIBRATION);
-    }
+// Blackout screen in headless Mode
+  if (frogpilot_toggles.value("Headless_Mode").toBool() || 1 == 1 ) {
     painter.beginNativePainting();
-
-    // ** START MODIFICATION FOR HEADLESS MODE **
-    // Add this condition to black out the camera stream if headless mode is enabled
-    if (frogpilot_toggles.value("Headless_Mode").toBool() || 1 == 1 ) { // Assuming "headless_mode" is a boolean toggle
-      painter.fillRect(this->rect(), Qt::black);
-    }
-    // ** END MODIFICATION FOR HEADLESS MODE **
-    
-    CameraWidget::setFrameId(model.getFrameId());
-    CameraWidget::paintGL();
+    painter.fillRect(this->rect(), Qt::black);
     painter.endNativePainting();
+  } else {
+    // draw camera frame
+    {
+      std::lock_guard lk(frame_lock);
+  
+      if (frames.empty()) {
+        if (skip_frame_count > 0) {
+          skip_frame_count--;
+          qDebug() << "skipping frame, not ready";
+          return;
+        }
+      } else {
+        // skip drawing up to this many frames if we're
+        // missing camera frames. this smooths out the
+        // transitions from the narrow and wide cameras
+        skip_frame_count = 5;
+      }
+  
+      // Wide or narrow cam dependent on speed
+      bool has_wide_cam = available_streams.count(VISION_STREAM_WIDE_ROAD);
+      if (has_wide_cam && frogpilot_toggles.value("camera_view").toInt() == 0) {
+        float v_ego = sm["carState"].getCarState().getVEgo();
+        if ((v_ego < 10) || available_streams.size() == 1) {
+          wide_cam_requested = true;
+        } else if (v_ego > 15) {
+          wide_cam_requested = false;
+        }
+        wide_cam_requested = wide_cam_requested && sm["controlsState"].getControlsState().getExperimentalMode();
+        // for replay of old routes, never go to widecam
+        wide_cam_requested = wide_cam_requested && s->scene.calibration_wide_valid;
+      }
+      CameraWidget::setStreamType(frogpilot_toggles.value("camera_view").toInt() == 1 ? VISION_STREAM_DRIVER :
+                                  frogpilot_toggles.value("camera_view").toInt() == 3 || wide_cam_requested ? VISION_STREAM_WIDE_ROAD :
+                                  VISION_STREAM_ROAD);
+  
+      s->scene.wide_cam = CameraWidget::getStreamType() == VISION_STREAM_WIDE_ROAD;
+      if (s->scene.calibration_valid) {
+        auto calib = s->scene.wide_cam ? s->scene.view_from_wide_calib : s->scene.view_from_calib;
+        CameraWidget::updateCalibration(calib);
+      } else {
+        CameraWidget::updateCalibration(DEFAULT_CALIBRATION);
+      }
+      painter.beginNativePainting();
+  
+      // ** START MODIFICATION FOR HEADLESS MODE **
+      // Add this condition to black out the camera stream if headless mode is enabled
+      //if (frogpilot_toggles.value("Headless_Mode").toBool() || 1 == 1 ) { // Assuming "headless_mode" is a boolean toggle
+        //painter.fillRect(this->rect(), Qt::black);
+      //}
+      // ** END MODIFICATION FOR HEADLESS MODE **
+      
+      CameraWidget::setFrameId(model.getFrameId());
+      CameraWidget::paintGL();
+      painter.endNativePainting();
+    }
   }
 
   painter.setRenderHints(QPainter::Antialiasing | QPainter::TextAntialiasing);
