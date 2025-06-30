@@ -28,6 +28,7 @@ private:
 
   // FrogPilot variables
   void resizeEvent(QResizeEvent *event);
+  bool prev_headless_mode_state = false; // To track the previous state of headless_mode
 
   FrogPilotOnroadWindow *frogpilot_onroad;
 
