@@ -196,4 +196,11 @@ void OnroadWindow::primeChanged(bool prime) {
 void OnroadWindow::paintEvent(QPaintEvent *event) {
   QPainter p(this);
   p.fillRect(rect(), QColor(bg.red(), bg.green(), bg.blue(), 255));
+
+  // Draw the top black rectangle in headless to make the top area over the boarder black, covering anything that might be there.
+  if (frogpilot_toggles.value("headless_mode").toBool()) {
+    // Draw the top black rectangle to make the top area over the boarder black, covering anything that might be there.
+    QRect screenRect = this->rect();
+    p.fillRect(QRect(0, 0, screenRect.width(), UI_BORDER_SIZE * 25), Qt::black);
+  }
 }
