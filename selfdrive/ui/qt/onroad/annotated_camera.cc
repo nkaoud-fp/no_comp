@@ -254,11 +254,22 @@ void AnnotatedCameraWidget::drawHud(QPainter &p, const cereal::FrogPilotPlan::Re
   }
 
   // current speed
+  //if (!frogpilot_nvg->bigMapOpen && frogpilot_nvg->standstillDuration == 0 && !frogpilot_toggles.value("hide_speed").toBool()) {
+    //p.setFont(InterFont(176, QFont::Bold));
+    //drawText(p, rect().center().x(), 210, speedStr);
+    //p.setFont(InterFont(66));
+    //drawText(p, rect().center().x(), 290, speedUnit, 200);
+  //}
   if (!frogpilot_nvg->bigMapOpen && frogpilot_nvg->standstillDuration == 0 && !frogpilot_toggles.value("hide_speed").toBool()) {
+    int current_speed_x = rect().center().x();
+    if (frogpilot_toggles.value("headless_mode").toBool()) {
+      //current_speed_x -= 100; // Adjust this value to shift left as desired
+      current_speed_x -= static_cast<int>(width() * 0.10); // Shift left by 10% of screen width
+    }
     p.setFont(InterFont(176, QFont::Bold));
-    drawText(p, rect().center().x(), 210, speedStr);
+    drawText(p, current_speed_x, 210, speedStr);
     p.setFont(InterFont(66));
-    drawText(p, rect().center().x(), 290, speedUnit, 200);
+    drawText(p, current_speed_x, 290, speedUnit, 200);
   }
 
   p.restore();
